@@ -1,4 +1,4 @@
-﻿pipeline {
+pipeline {
     agent any
     
     stages {
@@ -11,7 +11,8 @@
         stage('Build') {
             steps {
                 script {
-                    docker.image('mcr.microsoft.com/devcontainers/dotnet:dev-7.0').inside('-v /var/run/docker.sock:/var/run/docker.sock') {
+                    def customImage = docker.build('my-custom-image')
+                    customImage.inside {
                         sh 'dotnet build --configuration Release'
                     }
                 }
