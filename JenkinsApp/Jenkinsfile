@@ -21,7 +21,7 @@
         
         stage('Archive') {
             steps {
-                archiveArtifacts artifacts: '**/bin/Release/JenkinsApp.exe', fingerprint: true
+                archiveArtifacts artifacts: 'bin/Release/JenkinsApp.exe', fingerprint: true
             }
         }
     }
