@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'mcr.microsoft.com/dotnet/sdk:7.0'
+        }
+    }
     
     stages {
         stage('Checkout') {
@@ -10,12 +14,7 @@ pipeline {
         
         stage('Build') {
             steps {
-                script {
-                    def customImage = docker.build('my-custom-image')
-                    customImage.inside {
-                        sh 'dotnet build --configuration Release'
-                    }
-                }
+                sh 'dotnet build --configuration Release'
             }
         }
         
