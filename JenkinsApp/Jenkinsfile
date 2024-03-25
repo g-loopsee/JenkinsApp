@@ -1,5 +1,10 @@
 ﻿pipeline {
-    agent any
+    agent {
+        docker {
+            image 'mcr.microsoft.com/devcontainers/dotnet:dev-7.0'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
     
     stages {
         stage('Checkout') {
@@ -7,11 +12,17 @@
                 git 'https://github.com/g-loopsee/JenkinsApp.git'
             }
         }
+        
         stage('Build') {
             steps {
-                bat 'msbuild /t:Rebuild /p:Configuration=Release'
+                sh 'dotnet build --configuration Release'
             }
         }
-
+        
+        stage('Archive') {
+            steps {
+                archiveArtifacts artifacts: 'bin/Release/JenkinsApp.exe', fingerprint: true
+            }
+        }
     }
 }
