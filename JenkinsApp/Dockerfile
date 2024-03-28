@@ -1,14 +1,15 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
 WORKDIR /JenkinsApp
 
-# Copy everything
+# Копировать все файлы проекта
 COPY . ./
-# Restore as distinct layers
+# Восстановить зависимости
 RUN dotnet restore
-# Build and publish a release
+# Собрать и опубликовать релизную версию
 RUN dotnet build --configuration Release
 
-# Build runtime image
+# Собрать образ среды выполнения
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /JenkinsApp
-COPY --from=build-env /JenkinsApp/out .
+# Копировать собранные артефакты из папки сборки проекта
+COPY --from=build-env /JenkinsApp/bin/Release ./app
