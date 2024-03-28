@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'mcr.microsoft.com/dotnet/sdk:7.0'
-            args '-v /var/run/docker.sock:/var/run/docker.sock -v ${WORKSPACE}:/workspace -w /workspace'
+            args '-v //var//run//docker.sock://var//run//docker.soc
         }
     }
     
@@ -15,13 +15,13 @@ pipeline {
         
         stage('Build') {
             steps {
-                sh 'docker run -v ${WORKSPACE}:/workspace -w /workspace mcr.microsoft.com/dotnet/sdk:7.0 dotnet build --configuration Release'
+                sh 'dotnet build --configuration Release'
             }
         }
         
         stage('Archive') {
             steps {
-                archiveArtifacts artifacts: 'bin/Release/JenkinsApp.exe', fingerprint: true
+                archiveArtifacts artifacts: 'bin//Release//JenkinsApp.exe', fingerprint: true
             }
         }
     }
