@@ -17,7 +17,7 @@ pipeline {
         
         stage('Archive') {
             steps {
-                 bat 'copy /y "JenkinsApp\\bin\\Release\\net7.0\\DotNet.Docker.exe" "%WORKSPACE%"'
+                 bat 'copy /y "JenkinsApp\\bin\\Release\\net7.0\\JenkinsApp.exe" "%WORKSPACE%"'
             }
         }
     }
