@@ -12,5 +12,4 @@ RUN dotnet build --configuration Release
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /JenkinsApp
 # Копировать собранные артефакты из папки сборки проекта
-COPY --from=build-env /JenkinsApp/bin/Release ./app
-ENTRYPOINT ["dotnet", "JenkinsApp.dll"]
+COPY --from=build-env /JenkinsApp/bin/Release ./JenkinsApp
