@@ -2,24 +2,22 @@ pipeline {
     agent any
     
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/g-loopsee/JenkinsApp.git'
-            }
-        }
         
         stage('Build') {
             steps {
-                script {
-                    def workspacePath = pwd()
-                    sh "docker run -v ${workspacePath}:/app -w /app mcr.microsoft.com/dotnet/sdk:7.0 dotnet build --configuration Release"
-                }
+                dir("${env.WORKSPACE}/JenkinsApp") {
+                                    bat 'dir'
+                                        script {
+                                        bat 'docker build -t jenkinsApp -f Dockerfile .'
+                                        bat 'docker run jenkinsApp'
+                                    }
+                                }
             }
         }
         
         stage('Archive') {
             steps {
-                archiveArtifacts artifacts: 'bin/Release/JenkinsApp.exe', fingerprint: true
+                 bat 'copy /y "JenkinsApp\\bin\\Release\\net7.0\\DotNet.Docker.exe" "%WORKSPACE%"'
             }
         }
     }
