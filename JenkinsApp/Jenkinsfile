@@ -8,8 +8,8 @@ pipeline {
                 dir("${env.WORKSPACE}/JenkinsApp") {
                                     bat 'dir'
                                         script {
-                                        bat 'docker build -t jenkinsApp -f Dockerfile .'
-                                        bat 'docker run jenkinsApp'
+                                        bat 'docker build -t jenkinsapp -f Dockerfile .'
+                                        bat 'docker run jenkinsapp'
                                     }
                                 }
             }
