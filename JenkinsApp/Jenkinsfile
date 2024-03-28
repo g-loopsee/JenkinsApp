@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'mcr.microsoft.com/dotnet/sdk:7.0'
-            args '-v //var/jenkins_home/workspace/DotnetPipeline:/var/jenkins_home/workspace/DotnetPipeline -v //var/jenkins_home/workspace/DotnetPipeline@tmp:/var/jenkins_home/workspace/DotnetPipeline@tmp'
-        }
-    }
+    agent any
     
     stages {
         stage('Checkout') {
@@ -15,7 +10,10 @@ pipeline {
         
         stage('Build') {
             steps {
-                sh 'dotnet build --configuration Release'
+                script {
+                    def workspacePath = pwd()
+                    sh "docker run -v ${workspacePath}:/app -w /app mcr.microsoft.com/dotnet/sdk:7.0 dotnet build --configuration Release"
+                }
             }
         }
         
