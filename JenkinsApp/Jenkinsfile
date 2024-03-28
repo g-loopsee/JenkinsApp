@@ -15,7 +15,7 @@ pipeline {
         
         stage('Build') {
             steps {
-                sh 'dotnet build --configuration Release'
+                sh 'docker run -v ${WORKSPACE}:/workspace -w /workspace mcr.microsoft.com/dotnet/sdk:7.0 dotnet build --configuration Release'
             }
         }
         
