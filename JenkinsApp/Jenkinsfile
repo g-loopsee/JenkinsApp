@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker {
             image 'mcr.microsoft.com/dotnet/sdk:7.0'
+            args '-v //var/jenkins_home/workspace/DotnetPipeline:/var/jenkins_home/workspace/DotnetPipeline -v //var/jenkins_home/workspace/DotnetPipeline@tmp:/var/jenkins_home/workspace/DotnetPipeline@tmp'
         }
     }
     
